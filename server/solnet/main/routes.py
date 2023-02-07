@@ -15,6 +15,7 @@ resource_fields = {
     'power':   fields.Float,
 }
 
+
 class SolnetDao(object):
     def __init__(self, label, power) -> None:
         self.label = label
@@ -52,6 +53,11 @@ def read_file_as_image(data) -> np.ndarray:
     return image
 
 
+def numberWithoutRounding(num, precision=4):
+    [beforeDecimal, afterDecimal] = str(num).split('.')
+    return float(beforeDecimal + '.' + afterDecimal[0:precision])
+
+
 class Solnet(Resource):
     @marshal_with(resource_fields)
     def post(self):
@@ -77,5 +83,4 @@ class Solnet(Resource):
         label = np.argmax(label_prediction)
 
         power_prediction = power_regression_prediction(label, time, lux, temp)
-
-        return SolnetDao(label=class_names[label], power=power_prediction)
+        return SolnetDao(label=class_names[label], power=numberWithoutRounding(power_prediction))
