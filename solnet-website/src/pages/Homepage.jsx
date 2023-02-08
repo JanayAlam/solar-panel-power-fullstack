@@ -1,6 +1,5 @@
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ClearIcon from '@mui/icons-material/Clear';
-import CropIcon from '@mui/icons-material/Crop';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import {
     Button,
@@ -12,7 +11,7 @@ import {
     Select,
     Stack,
     TextField,
-    Typography
+    Typography,
 } from '@mui/material';
 import axios from 'axios';
 import { useState } from 'react';
@@ -238,8 +237,9 @@ const Homepage = () => {
                                         fullWidth
                                         sx={{ mb: 1 }}
                                         onClick={handleClearImage}
+                                        disabled={isLoading}
                                     >
-                                        <CropIcon
+                                        <ClearIcon
                                             fontSize="small"
                                             sx={{ mr: 1 }}
                                         />
@@ -264,7 +264,9 @@ const Homepage = () => {
                                 </>
                             ) : (
                                 <>
-                                    <Dropzone handleSelect={handleImageSelect} />
+                                    <Dropzone
+                                        handleSelect={handleImageSelect}
+                                    />
                                     {errorState.image && (
                                         <Typography
                                             variant="caption"
@@ -384,6 +386,7 @@ const Homepage = () => {
                                         variant="outlined"
                                         color="warning"
                                         onClick={handleClearAll}
+                                        disabled={isLoading}
                                     >
                                         <ClearIcon
                                             fontSize="small"
